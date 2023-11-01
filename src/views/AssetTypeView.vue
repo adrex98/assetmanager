@@ -23,12 +23,14 @@
         <tbody>
           <tr v-for="assetType in existingAssetTypes" :key="assetType.id">
             <td>{{assetType.assetTypeName}}</td>
-            <td></td>
+            <td>{{ assignedAssetsCount[assetType.id] || 0 }}</td>
             <td>{{assetType.registrationDate}}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    <br />
+    <button class="btn blue" @click="goToNewAsset">Registrar Activo(s)</button>
   </div>
 </template>
 
@@ -43,12 +45,17 @@ export default {
       // assetsAsigned: '',
       registrationDate: '',
       existingAssetTypes: [],
+      assignedAssetsCount: {},
     };
   },
   mounted() {
     this.getExistingAssetTypes();
+    this.getExistingAssets();
   },
   methods: {
+    goToNewAsset() {
+      this.$router.push('/newAssets');
+    },
     async postTipoActivo() {
       if (this.assetTypeName) {
         const currentDate = new Date(); // Obtenemos la fecha actual
@@ -82,6 +89,26 @@ export default {
         }
       } catch (error) {
         console.error('Error al obtener los tipos de activos Existentes', error);
+      }
+    },
+    async getExistingAssets() {
+      try {
+        const response = await this.axios.get(this.api + '/assets');
+        if (response.status === 200) {
+          this.existingAssets = response.data;
+          // Reiniciar el contador
+          this.assignedAssetsCount = {};
+          // Actualizar el contador
+          this.existingAssets.forEach((asset) => {
+            if (!this.assignedAssetsCount[asset.assetTypeId]) {
+              this.assignedAssetsCount[asset.assetTypeId] = 1;
+            } else {
+              this.assignedAssetsCount[asset.assetTypeId]++;
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error al obtener los Activos Existentes', error);
       }
     },
   },

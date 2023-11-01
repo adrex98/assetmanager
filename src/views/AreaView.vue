@@ -16,6 +16,8 @@
               {{ manager.firstName }}
             </option>
           </select>
+          <br />
+          <button class="btn blue" @click="goToNewManager">Nuevo Encargado</button>
         </div>
         <div class="input-field">
           <input v-model="employees" type="number" placeholder="Número de empleados">
@@ -69,6 +71,9 @@ export default {
     this.getExistingManagers();
   },
   methods: {
+    goToNewManager() {
+      this.$router.push('/managers');
+    },
     async postArea() {
       if (this.name && this.managerId && this.employees) {
         const response = await this.axios.post(this.api + '/areas', {

@@ -23,7 +23,10 @@
             {{ assetType.assetTypeName }}
           </option>
           </select>
+          <br />
+          <button class="btn blue" @click="goToNewAssetType">Nuevo Tipo</button>
         </div>
+        
       </div>
       <div class="row">
         <div class="input-field col s4">
@@ -45,7 +48,8 @@
               {{ area.name }}
             </option>
           </select>
-         
+          <br />
+          <button class="btn blue" @click="goToNewArea">Nuevo Area</button>
         </div>
         <br />
         <div class="input-field col s5">
@@ -54,6 +58,8 @@
       </div>
     </form>
   </div>
+  <br />
+  <button class="btn green" @click="goToSearchAssets">Ver Activos</button>
 </div>
 </template>
 
@@ -78,6 +84,15 @@ export default {
     this.getExistingAssetTypes();
   },
   methods: {
+    goToSearchAssets() {
+      this.$router.push('/assets');
+    },
+    goToNewAssetType() {
+      this.$router.push('/newAssetType');
+    },
+    goToNewArea() {
+      this.$router.push('/areas');
+    },
     async registerAsset() {
       if (this.assetType && this.brand && this.model && this.status && this.areaId) {
         const response = await this.axios.post(this.api + '/assets', {

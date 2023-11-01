@@ -36,6 +36,8 @@
         </tbody>
       </table>
     </div>
+    <br />
+    <button class="btn blue" @click="goToNewArea">Registrar Area</button>
   </div>
 </template>
 
@@ -57,6 +59,9 @@ export default {
     this.getExistingManagers();
   },
   methods: {
+    goToNewArea() {
+      this.$router.push('/areas');
+    },
     async postEncargado() {
       if (this.firstName && this.lastName && this.cellPhone) {
         const currentDate = new Date(); // Obtenemos la fecha actual

@@ -8,7 +8,7 @@
       </router-link>
     </header>
     <section class="features">
-      <div class="feature" @click="goToAssets">
+      <div class="feature" @click="goToNewAssets">
         <div class="feature-content">
           <!-- <img src="@/assets/icon1.png" alt="Icon 1" /> -->
           <h2>Registro de Activos</h2>
@@ -37,15 +37,15 @@
 export default {
   name: 'Home',
   methods: {
-    goToAssets() {
-      this.$router.push('/assets');
+    goToNewAssets() {
+      this.$router.push('/newAssets');
     },
     goToAreas() {
       this.$router.push('/areas');
     },
     goToSearch() {
       this.$router.push('/assets');
-    }
+    },
   }
 }
 </script>

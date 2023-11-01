@@ -58,7 +58,7 @@ export default {
       api,
       name: '',
       manager: '',
-      employees: 0,
+      employees: null,
       existingAreas: [],
       existingManagers: [],
       managerId: null,
@@ -81,6 +81,14 @@ export default {
         if (response.status === 201) {
           alert('Área registrada con éxito');
           this.existingAreas.push(response.data);
+
+          // Limpiar los Datos
+
+          this.name = '';
+          this.manager = '';
+          this.employees = '',
+          this.managerId = null;
+          
         } else {
           alert('Hubo un error en el registro');
         }

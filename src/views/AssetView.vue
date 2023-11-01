@@ -1,51 +1,5 @@
 <template>
   <div class="wrapper">
-  
-  <div class="container">
-    <h2>Registrar Activo</h2>
-    <!-- Formulario para Registrar Activo -->
-    <form @submit.prevent="registerAsset" ref="assetForm">
-      <div class="row">
-        <div class="input-field col s4">
-          <label for="assetType">Tipo de Activo</label>
-          <select v-model="assetType" id="assetType">
-            <option value="Computadora">Computadora</option>
-            <option value="Impresora">Impresora</option>
-            <!-- Otras opciones -->
-          </select>
-        </div>
-        <div class="input-field col s4">
-          <input v-model="brand" id="brand" type="text" class="validate" required>
-          <label for="brand">Marca</label>
-        </div>
-        <div class="input-field col s4">
-          <input v-model="model" id="model" type="text" class="validate" required>
-          <label for="model">Modelo</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s4">
-          <label for="status">Estado</label>
-          <select v-model="status" id="status">
-            <option value="Nuevo">Nuevo</option>
-            <option value="Usado">Usado</option>
-            <option value="En desuso">En desuso</option>
-          </select>
-        </div>
-        <div class="input-field col s4">
-          <label for="areaId">Área</label>
-          <select v-model="areaId" id="areaId">
-            <option v-for="area in existingAreas" :key="area.id" :value="area.id">
-              {{ area.name }}
-            </option>
-          </select>
-        </div>
-        <div class="input-field col s4">
-          <button class="waves-effect waves-light btn" type="submit">Registrar Activo</button>
-        </div>
-      </div>
-    </form>
-  </div>
   <div class="container">
     <h2>Buscador de Activos</h2>
     
@@ -82,7 +36,7 @@
       </thead>
       <tbody>
         <tr v-for="asset in filterAssets" :key="asset.id">
-          <td>{{ asset.type }}</td>
+          <td>{{ getAssetTypeName(asset.assetTypeId) }}</td>
           <td>{{ asset.brand }}</td>
           <td>{{ asset.model }}</td>
           <td>{{ asset.status }}</td>
@@ -108,6 +62,7 @@ export default {
       areaId: null,
       existingAreas: [],
       existingAssets: [],
+      existingAssetTypes: [],
       filterStatus: '', // Inicialmente Vacío
       searchType: '', // Inicialmente Vacío
     };
@@ -115,50 +70,30 @@ export default {
   created() {
     this.getExistingAreas();
     this.getExistingAssets();
+    this.getExistingAssetTypes();
   },
   computed: {
-    filterAssets() {
-      return this.existingAssets.filter((asset) => {
-        // Aplicar Filtro por estado
-        if (this.filterStatus && asset.status !== this.filterStatus) {
-          return false;
-        }
-
-        // Aplicar búsqueda por tipo
-        if (this.searchType && !asset.type.toLowerCase().includes(this.searchType.toLowerCase())) {
-          return false;
-        }
-
-        return true;
-      });
-    },
-  },
-  methods: {
-    async registerAsset() {
-      if (this.assetType && this.brand && this.model && this.status && this.areaId) {
-        const response = await this.axios.post(this.api + '/assets', {
-          type: this.assetType,
-          brand: this.brand,
-          model: this.model,
-          status: this.status,
-          areaId: this.areaId,
-        });
-        // Manejar la respuesta
-        if (response.status === 201) {
-          alert('Activo registrado con éxito!');
-
-          this.assetType = '';
-          this.brand = '';
-          this.model = '';
-          this.status = '';
-          this.areaId = null;
-
-          this.existingAssets.push(response.data);
-        }
-      } else {
-        alert('Por favor, complete todos los campos.');
+  filterAssets() {
+    return this.existingAssets.filter((asset) => {
+      // Aplicar Filtro por estado
+      if (this.filterStatus && asset.status !== this.filterStatus) {
+        return false;
       }
-    },
+
+      // Aplicar búsqueda por nombre del tipo de activo
+      if (this.searchType) {
+        const assetType = this.existingAssetTypes.find((type) => type.id === asset.assetTypeId);
+        if (assetType && assetType.assetTypeName.toLowerCase().includes(this.searchType.toLowerCase())) {
+          return true;
+        }
+        return false;
+      }
+
+      return true;
+    });
+  },
+},
+  methods: {
     getAreaName(areaId) {
       const area = this.existingAreas.find((area) => area.id === areaId);
       return area ? area.name : 'Area desconocida';
@@ -171,6 +106,22 @@ export default {
         }
       } catch (error) {
         console.error('Error al obtener las áreas existentes', error);
+      }
+    },
+    getAssetTypeName(assetTypeId) {
+      const assetType = this.existingAssetTypes.find((type) => type.id === assetTypeId);
+      return assetType ? assetType.assetTypeName : 'Tipo de Activo Desconocido';
+    },
+    async getExistingAssetTypes() {
+      try {
+        const response = await this.axios.get(this.api + '/assetTypes');
+        if (response.status === 200) {
+          // console.log(response.data);
+          
+          this.existingAssetTypes = response.data;
+        }
+      } catch (error) {
+        console.error('Error al obtener tipos de activos', error);
       }
     },
     async getExistingAssets() {

@@ -1,37 +1,30 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <h2>Nuevo Encargado</h2>
-      <form @submit.prevent="postEncargado">
+      <h2>Nuevo Tipo de Activo</h2>
+      <form @submit.prevent="postTipoActivo">
         <div class="input-field">
-          <input v-model="firstName" placeholder="Nombre(s)">
-        </div>
-        <div class="input-field">
-          <input v-model="lastName" placeholder="Apellido(s)">
-        </div>
-        <div class="input-field">
-          <input v-model="cellPhone" placeholder="Número de Celular">
+          <input v-model="assetTypeName" placeholder="Tipo de Activo">
         </div>
         <button class="btn waves-effect waves-light" type="submit">Registrar</button>
       </form>
     </div>
     <div class="container">
-      <h2>Encargados Existentes</h2>
+      <h2>Tipo de Activos Existentes</h2>
+      <br />
       <table class="striped">
         <thead>
           <tr>
-            <th>Nombre(s)</th>
-            <th>Apellido(s)</th>
-            <th>Celular</th>
-            <th>Fecha de Registro</th>
+            <th>Tipo de Activo</th>
+            <th>Cantidad de Activos Asignados</th>
+            <th>Fecha de Creacion</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="manager in existingManagers" :key="manager.id">
-            <td>{{manager.firstName}}</td>
-            <td>{{manager.lastName}}</td>
-            <td>{{manager.cellPhone}}</td>
-            <td>{{manager.registrationDate}}</td>
+          <tr v-for="assetType in existingAssetTypes" :key="assetType.id">
+            <td>{{assetType.assetTypeName}}</td>
+            <td></td>
+            <td>{{assetType.registrationDate}}</td>
           </tr>
         </tbody>
       </table>
@@ -41,52 +34,54 @@
 
 <script>
 export default {
-  name: 'managers',
+  name: 'newAssetType',
   data() {
     const api = process.env.VUE_APP_API;
     return {
       api,
-      firstName: '',
-      lastName: '',
-      cellPhone: '',
-      existingManagers: [],
+      assetTypeName: '',
+      // assetsAsigned: '',
       registrationDate: '',
+      existingAssetTypes: [],
     };
   },
   mounted() {
-    this.getExistingManagers();
+    this.getExistingAssetTypes();
   },
   methods: {
-    async postEncargado() {
-      if (this.firstName && this.lastName && this.cellPhone) {
+    async postTipoActivo() {
+      if (this.assetTypeName) {
         const currentDate = new Date(); // Obtenemos la fecha actual
         const formattedDate = currentDate.toISOString().split('T')[0]; // Formato a la fecha
-        alert(formattedDate);
-        const response = await this.axios.post(this.api + '/managers', {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          cellPhone: this.cellPhone,
+        // alert(formattedDate);
+        const response = await this.axios.post(this.api + '/assetTypes', {
+          assetTypeName: this.assetTypeName,
           registrationDate: formattedDate,
         });
 
         if (response.status === 201) {
-          console.log('Nuevo Encargado Registrado con Exito!');
-          this.existingManagers.push(response.data);
+          alert('Nuevo Encargado Registrado con Exito!');
+          this.existingAssetTypes.push(response.data);
+
+          // Limpiar Datos
+
+          this.assetTypeName = '';
+
         } else {
-          console.log('Hubo un error en el registro');
+          alert('Hubo un error en el registro');
         }
       } else {
         alert('Por favor completar los campos');
       }
     },
-    async getExistingManagers() {
+    async getExistingAssetTypes() {
       try {
-        const response = await this.axios.get(this.api + '/managers');
+        const response = await this.axios.get(this.api + '/assetTypes');
         if (response.status === 200) {
-          this.existingManagers = response.data;
+          this.existingAssetTypes = response.data;
         }
       } catch (error) {
-        console.error('Error al obtener los Encargados Existentes', error);
+        console.error('Error al obtener los tipos de activos Existentes', error);
       }
     },
   },

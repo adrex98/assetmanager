@@ -61,7 +61,7 @@ export default {
       if (this.firstName && this.lastName && this.cellPhone) {
         const currentDate = new Date(); // Obtenemos la fecha actual
         const formattedDate = currentDate.toISOString().split('T')[0]; // Formato a la fecha
-        alert(formattedDate);
+        // alert(formattedDate);
         const response = await this.axios.post(this.api + '/managers', {
           firstName: this.firstName,
           lastName: this.lastName,
@@ -70,10 +70,16 @@ export default {
         });
 
         if (response.status === 201) {
-          console.log('Nuevo Encargado Registrado con Exito!');
+          alert('Nuevo Encargado Registrado con Exito!');
           this.existingManagers.push(response.data);
+
+          // Limpiar los Datos luego del registro exitoso
+          this.firstName = '';
+          this.lastName = '';
+          this.cellPhone = '';
+          
         } else {
-          console.log('Hubo un error en el registro');
+          alert('Hubo un error en el registro');
         }
       } else {
         alert('Por favor completar los campos');

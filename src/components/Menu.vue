@@ -7,10 +7,10 @@
 </ul>
 
 <ul id="dropdown2" class="dropdown-content">
-  <li><router-link to="/assets">Buscar Activos</router-link></li>
+  <li><router-link to="/newAssetType">Nuevo Tipo de Activo</router-link></li>
+  <li><router-link to="/newAssets">Registrar Activos</router-link></li>
   <li class="divider"></li>
-  <li><router-link to="/assets">Nuevo Tipo de Activo</router-link></li>
-  <li><router-link to="/assets">Registrar Activos</router-link></li>
+  <li><router-link to="/assets">Buscar Activos</router-link></li>
   <li class="divider"></li>
 </ul>
 <nav>

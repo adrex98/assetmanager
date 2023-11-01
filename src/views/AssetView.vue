@@ -1,12 +1,6 @@
 <template>
   <div class="wrapper">
-  <div class="container">
-    <h2>Nuevo Tipo de Activo</h2>
-    <!-- Formulario para Nuevo Tipo de Activo -->
-    <form class="col s12">
-      <!-- Contenido del formulario -->
-    </form>
-  </div>
+  
   <div class="container">
     <h2>Registrar Activo</h2>
     <!-- Formulario para Registrar Activo -->

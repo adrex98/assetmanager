@@ -1,13 +1,13 @@
 <template>
 <!-- Dropdown Structure -->
 <ul id="dropdown1" class="dropdown-content">
-  <li><router-link to="/areas">Nuevo Encargado(a)</router-link></li>
+  <li><router-link to="/managers">Nuevo Encargado(a)</router-link></li>
   <li><router-link to="/areas">Nueva Area</router-link></li>
   <li class="divider"></li>
 </ul>
 
 <ul id="dropdown2" class="dropdown-content">
-  <li><router-link to="/assets">Activos Registrados</router-link></li>
+  <li><router-link to="/assets">Buscar Activos</router-link></li>
   <li class="divider"></li>
   <li><router-link to="/assets">Nuevo Tipo de Activo</router-link></li>
   <li><router-link to="/assets">Registrar Activos</router-link></li>

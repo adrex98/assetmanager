@@ -10,12 +10,17 @@ const routes = [
   {
     path: '/areas',
     name: 'Areas',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AreaView.vue')
+    component: () => import(/* */ '../views/AreaView.vue')
   },
   {
     path: '/assets',
     name: 'Assets',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AssetView.vue')
+    component: () => import(/* */ '../views/AssetView.vue')
+  },
+  {
+    path: '/managers',
+    name: 'Managers',
+    component: () => import(/* */ '../views/ManagerView.vue')
   },
 ]
 

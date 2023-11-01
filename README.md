@@ -4,6 +4,9 @@
 ```
 npm install
 ```
+### Start Json Server
+
+json-server --watch db.json
 
 ### Compiles and hot-reloads for development
 ```

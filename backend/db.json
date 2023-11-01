@@ -1,42 +1,5 @@
 {
-  "areas": [
-    {
-      "name": "Ventas",
-      "manager": "Juan",
-      "employees": 4,
-      "id": 2
-    },
-    {
-      "name": "asdas",
-      "manager": "asdasd",
-      "employees": 22222,
-      "id": 3
-    }
-  ],
-  "assets": [
-    {
-      "type": "Computadora",
-      "brand": "cccc",
-      "model": "cccc",
-      "status": "Nuevo",
-      "areaId": 2,
-      "id": 9
-    },
-    {
-      "type": "Impresora",
-      "brand": "ssss",
-      "model": "sssss",
-      "status": "Usado",
-      "areaId": 2,
-      "id": 10
-    },
-    {
-      "type": "Computadora",
-      "brand": "eeeee",
-      "model": "eeeee",
-      "status": "Nuevo",
-      "areaId": 2,
-      "id": 11
-    }
-  ]
+  "areas": [],
+  "assets": [],
+  "managers": []
 }

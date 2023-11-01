@@ -1,4 +1,4 @@
-# activos_app
+# Asset Manager
 
 ## Project setup
 ```
@@ -6,7 +6,9 @@ npm install
 ```
 ### Start Json Server
 
+bash```
 json-server --watch db.json
+```
 
 ### Compiles and hot-reloads for development
 ```
